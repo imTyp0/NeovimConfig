@@ -39,7 +39,7 @@ packer.init({
 return packer.startup(function(use)
 	--[[ Packer ]]
 	use("wbthomason/packer.nvim")
-		
+
 	--[[ Treesitter]]
 	use({"nvim-treesitter/nvim-treesitter", run = ":TSUpdate"})
 	use("hiphish/rainbow-delimiters.nvim")
@@ -59,16 +59,43 @@ return packer.startup(function(use)
 	use("hrsh7th/cmp-path")
 	use("hrsh7th/cmp-cmdline")
 
+	--[[ Snippets - Necessary for LSP]]
+	use({"garymjr/nvim-snippets",
+		config = function()
+			local cmp = require("cmp")
+			cmp.setup({
+				snippet = {
+					expand = function(args)
+						vim.snippet.expand(args.body)
+					end,
+				},
+				window = {
+					completion = cmp.config.window.bordered(),
+					documentation = cmp.config.window.bordered()
+				},
+				mapping = cmp.mapping.preset.insert({
+					["<C-b>"] = cmp.mapping.scroll_docs(-4),
+					["<C-g>"] = cmp.mapping.scroll_docs(4),
+					["<C-Space>"] = cmp.mapping.confirm({select = true})
+				}),
+				sources = cmp.config.sources({
+					{name = "nvim_lsp"}
+				}),
+				{name = "buffer"}
+			})
+		end,
+	})
+
 	--[[ Autopairs ]]
 	use("windwp/nvim-autopairs")
-	
+
 	--[[ LSP ]]
 	use({
 		"williamboman/mason.nvim", -- LSP installer
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig"
 	})
-	
+
 	--[[ Others ]]
 	use("folke/which-key.nvim") -- Keybinds
 	use("norcalli/nvim-colorizer.lua") -- Make CSS color codes colored
