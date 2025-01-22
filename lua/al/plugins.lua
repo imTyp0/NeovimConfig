@@ -107,7 +107,8 @@ return packer.startup(function(use)
 	use("kyazdani42/nvim-tree.lua") -- Filesystem tree
 
 	--[[ Color scheme ]]
-	use "EdenEast/nightfox.nvim"
+	-- use "EdenEast/nightfox.nvim"
+	use {"rose-pine/neovim", as = "rose-pine"}
 
 	--[[ Toggleterm ]]
 	use{"akinsho/toggleterm.nvim", tag = "*", config = function()

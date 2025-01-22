@@ -53,6 +53,13 @@ local keybinds = {
 		keymap = "<A-i>",
 		action = "<cmd>ToggleTerm direction=float<CR>",
 		desc = "Close a floating ToggleTerm window"
+	},
+	-- Accept the LSP's quick fix
+	{
+		mode = "n",
+		keymap = "<Space>qf",
+		action = "<cmd>lua vim.lsp.buf.code_action()<CR>",
+		desc = "Accept the LSP's quick fix"
 	}
 }
 
